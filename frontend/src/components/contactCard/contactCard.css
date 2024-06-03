@@ -1,0 +1,27 @@
+.contact-card {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.contact-details {
+  flex: 1;
+}
+
+h3 {
+  margin-top: 0;
+}
+
+p {
+  margin: 5px 0;
+}

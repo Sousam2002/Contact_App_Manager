@@ -44,11 +44,6 @@ const loginUser = asyncHandler(async(req,res)=>{
     // Comapre password and hashedpassword
     if(user){
         if(await bcrypt.compare(password,user.password)){
-            
-            res.cookie('user_id', user.id, { 
-                httpOnly: true, 
-                maxAge: 15 * 60 * 1000 
-            });
 
             const accessToken = jwt.sign({
                 user:{
@@ -58,10 +53,9 @@ const loginUser = asyncHandler(async(req,res)=>{
                 }
             },
             process.env.ACCESS_TOKEN_SECRET,
-            {expiresIn:"15m"}
+            {expiresIn:"1h"}
             );
-            res.json({username:user.username,user_id:user.id});
-            res.status(200).json({accessToken})
+            res.status(200).json({username:user.username,user_id:user.id,token:accessToken});
         }else{
             res.status(401);
             res.json({ error: "Password is invalid" });

@@ -1,0 +1,12 @@
+.eachcontact {
+    display: flex;
+    max-width: 35%;
+    border-color: black;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin: 1%;
+}
+
+.deletebutton {
+    height: 10%;
+}
