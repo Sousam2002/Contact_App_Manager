@@ -1,0 +1,21 @@
+.contactpage {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100vh; /* Adjust as needed */
+  }
+  
+  .addcontact-container {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    border-right: 1px solid #ccc;
+  }
+  
+  .contactlist-container {
+    flex: 2;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+  

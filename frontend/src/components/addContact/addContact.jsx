@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { createContact } from "../../features/contactSlice";
+import "./addContact.css";
 
 const AddContact = () => {
     const dispatch = useDispatch();
-    // const contacts = useSelector((state)=> state.contacts);
-    // console.log(contacts);
     const token = useSelector((state) => state.user.token);
     const [formData, setFormData] = useState({
         name: "",
@@ -29,7 +28,6 @@ const AddContact = () => {
             });
             console.log("Contact added successfully");
             dispatch(createContact(formData));
-            // Optionally, you can reset the form after successful submission
             setFormData({
                 name: "",
                 email: "",
@@ -41,7 +39,7 @@ const AddContact = () => {
     };
 
     return (
-        <div>
+        <div className="add-contact-container">
             <h2>Add Contact</h2>
             <form onSubmit={handleSubmit}>
                 <div>

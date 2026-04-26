@@ -3,6 +3,7 @@ import  axios from "axios";
 import './contactCard.css';
 
 const ContactCard = ({ contact }) => {
+  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   const [avatarUrl, setAvatarUrl] = useState('');
 
   useEffect(() => {
@@ -19,16 +20,19 @@ const ContactCard = ({ contact }) => {
 
     fetchAvatar();
   }, [contact.email]);
-
+  var d = new Date(contact.createdAt);
+  var day = days[d.getDay()];
+  var date = d.getDate();
+  var month = d.getMonth();
+  var year = d.getFullYear();
   return (
     <div className="contact-card">
       {avatarUrl && <img className="avatar" src={`data:image/svg+xml;utf8,${encodeURIComponent(avatarUrl)}`} alt="Avatar" />}
       <div className="contact-details">
         <h3>{`${contact.name}`.toUpperCase()}</h3>
-        <p>Email: {contact.email}</p>
-        <p>Phone: {contact.phone}</p>
-        <p>Created At: {new Date(contact.createdAt).toLocaleString()}</p>
-        <p>Updated At: {new Date(contact.updatedAt).toLocaleString()}</p>
+        <p><b>Email:</b> {contact.email}</p>
+        <p><b>Phone:</b> {contact.phone}</p>
+        <p><b>Created On:</b> {`${day} , ${date}/${month}/${year}`}</p>
       </div>
   </div>
 
