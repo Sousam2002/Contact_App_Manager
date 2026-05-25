@@ -11,12 +11,12 @@
 - [x] Remove debug `console.log` calls that should not stay in production code.
 
 ## 2. Finish the auth flow on the frontend
-- [ ] Decide the expected auth UX after registration: either log the user in immediately or keep registration and login as separate steps.
-- [ ] Fix the Redux user state shape so registration, login, cookie restore, and logout all use the same fields consistently.
-- [ ] Redirect users after successful login/logout instead of leaving them on the same screen.
-- [ ] Prevent unauthenticated users from accessing the contacts page directly.
-- [ ] Replace `alert()`-based auth messaging with inline UI feedback or a reusable notification component.
-- [ ] Add loading and error states for login and registration requests.
+- [x] Decide the expected auth UX after registration: keep registration and login as separate steps, matching the current UI and backend API shape.
+- [x] Fix the Redux user state shape so registration, login, cookie restore, and logout all use the same fields consistently.
+- [x] Redirect users after successful login/logout instead of leaving them on the same screen.
+- [x] Prevent unauthenticated users from accessing the contacts page directly.
+- [x] Replace `alert()`-based auth messaging with inline UI feedback or a reusable notification component.
+- [x] Add loading and error states for login and registration requests.
 
 ## 3. Complete the contact management flow
 - [ ] Finish the missing Redux reducers in `contactSlice.js` (`setContact`, `updateContact`) or remove them if they are not needed.
