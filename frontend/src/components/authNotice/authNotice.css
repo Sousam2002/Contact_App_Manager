@@ -1,0 +1,26 @@
+.auth-notice {
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.auth-notice-success {
+  background-color: #e8f7ee;
+  border-color: #8fd1a8;
+  color: #1f6b3b;
+}
+
+.auth-notice-error {
+  background-color: #fdecec;
+  border-color: #f0a7a7;
+  color: #9b1c1c;
+}
+
+.auth-notice-info {
+  background-color: #eef5ff;
+  border-color: #a8c4f0;
+  color: #1d4f91;
+}

@@ -33,7 +33,23 @@
   }
   
   /* Style for form submit button on hover */
-  .login-container button:hover {
+.login-container button:hover {
     background-color: #0056b3;
+  }
+
+.login-container button:disabled {
+    background-color: #8fb8e8;
+    cursor: not-allowed;
+  }
+
+.login-container input:disabled {
+    background-color: #f3f3f3;
+    cursor: not-allowed;
+  }
+
+.form-status {
+    margin: 0 0 12px;
+    color: #1d4f91;
+    font-size: 0.95rem;
   }
   

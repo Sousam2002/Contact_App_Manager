@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { setUser,setError } from '../../features/userSlice';
+import { clearError, setError, setUser } from '../../features/userSlice';
+import { useNavigate } from 'react-router-dom';
+import AuthNotice from '../authNotice/authNotice';
 import './login.css'; // Import the CSS file
 import { setCookie } from '../../cookiesHandler';
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [feedback, setFeedback] = useState({ message: '', type: 'info' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
-    username: '',
     email: '',
     password: ''
   });
@@ -20,13 +24,15 @@ const Login = () => {
 
   const handleSubmit = async(e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setFeedback({ message: '', type: 'info' });
+
     try {
       const response = await axios.post('http://localhost:5001/api/users/login', formData);
       
       // Storing user in redux state
       dispatch(setUser(response.data));
-      alert(`Welcome ${response.data.username}`);
-
+      dispatch(clearError());
       
       // Store token and user_id in cookies
       const { token, user_id,username } = response.data;
@@ -34,19 +40,22 @@ const Login = () => {
       setCookie("token",token,expirationTime);
       setCookie("user_id",user_id,expirationTime);
       setCookie("username",username,expirationTime);
+      navigate('/contacts');
 
     } catch (error) {
-      if(error.response && error.response.status === 401){
-        alert(error.response.data.error);
-        dispatch(setError(error.response.data.error));
-      }
-      console.error('Registration failed:', error);
+      const errorMessage = error.response?.data?.message || error.response?.data?.error || 'Login failed';
+      setFeedback({ message: errorMessage, type: 'error' });
+      dispatch(setError(errorMessage));
+      console.error('Login failed:', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <div className="login-container"> {/* Apply the container style */}
       <h1>Login</h1>
+      <AuthNotice message={feedback.message} type={feedback.type} />
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">Email:</label>
@@ -56,6 +65,7 @@ const Login = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
+            disabled={isSubmitting}
             required
           />
         </div>
@@ -67,10 +77,14 @@ const Login = () => {
             name="password"
             value={formData.password}
             onChange={handleChange}
+            disabled={isSubmitting}
             required
           />
         </div>
-        <button type="submit">Login</button>
+        {isSubmitting && <p className="form-status">Signing you in...</p>}
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Logging in...' : 'Login'}
+        </button>
       </form>
     </div>
   );

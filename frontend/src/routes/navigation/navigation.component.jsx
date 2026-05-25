@@ -18,16 +18,17 @@ const Navigation = () => {
     const storedUsername = getCookie("username");
     const storedUserId = getCookie("user_id");
     const storedToken = getCookie("token");
-    if (storedUsername && !user.username) {
+
+    if (storedUsername && storedUserId && storedToken && !user.token) {
       dispatch(
         setUser({
           username: storedUsername,
-          user_id: storedUserId,
+          userId: storedUserId,
           token: storedToken,
         })
       );
     }
-  }, [dispatch, user]);
+  }, [dispatch, user.token]);
 
   const logoutHandler = () => {
     dispatch(clearUser());
@@ -36,8 +37,12 @@ const Navigation = () => {
       const name = cookie.trim().split("=")[0];
       document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
     });
-    alert("Successfully logged out");
-    navigate('/auth');
+    navigate('/auth', {
+      state: {
+        message: "Successfully logged out.",
+        type: "success",
+      },
+    });
   };
 
   return (

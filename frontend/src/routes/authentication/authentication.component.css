@@ -1,4 +1,15 @@
 .window{
     padding-top: 5%;
     display: flex;
+    justify-content: center;
+}
+
+.auth-window-content {
+    width: min(760px, 100%);
+    padding: 0 16px;
+}
+
+.auth-forms {
+    display: flex;
+    gap: 24px;
 }
