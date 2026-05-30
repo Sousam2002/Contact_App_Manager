@@ -19,25 +19,25 @@
 - [x] Add loading and error states for login and registration requests.
 
 ## 3. Complete the contact management flow
-- [ ] Finish the missing Redux reducers in `contactSlice.js` (`setContact`, `updateContact`) or remove them if they are not needed.
-- [ ] Update `AddContact` to use the API response object instead of pushing raw form data into Redux.
-- [ ] Add contact editing support in the UI and connect it to the backend `PUT /api/contacts/:id` route.
-- [ ] Add contact details viewing or selection behavior if single-contact state is meant to be supported.
-- [ ] Add empty-state UI for when a user has no saved contacts yet.
-- [ ] Add loading, success, and error states for fetch, create, update, and delete contact actions.
-- [ ] Confirm the contacts list refreshes correctly after every CRUD action without relying on stale local state.
+- [x] Finish the missing Redux reducers in `contactSlice.js` (`setContact`, `updateContact`) or remove them if they are not needed.
+- [x] Update `AddContact` to use the API response object instead of pushing raw form data into Redux.
+- [x] Add contact editing support in the UI and connect it to the backend `PUT /api/contacts/:id` route.
+- [x] Add contact details viewing or selection behavior if single-contact state is meant to be supported.
+- [x] Add empty-state UI for when a user has no saved contacts yet.
+- [x] Add loading, success, and error states for fetch, create, update, and delete contact actions.
+- [x] Confirm the contacts list refreshes correctly after every CRUD action without relying on stale local state.
 
 ## 4. Fix routing and navigation
-- [ ] Add a real landing page for `/` or redirect `/` to a meaningful route.
-- [ ] Remove or implement the `/about` route because the navigation links to a page that does not exist.
-- [ ] Highlight the correct active nav links and ensure navigation reflects the logged-in state reliably after page refresh.
+- [x] Add a real landing page for `/` or redirect `/` to a meaningful route.
+- [x] Remove or implement the `/about` route because the navigation links to a page that does not exist.
+- [x] Highlight the correct active nav links and ensure navigation reflects the logged-in state reliably after page refresh.
 
 ## 5. Clean up frontend architecture
-- [ ] Move API base URLs out of hardcoded `http://localhost:5001` strings and use env config or the existing proxy consistently.
-- [ ] Create a small API helper/service layer so auth and contact requests are not scattered across components.
-- [ ] Revisit cookie handling and decide whether to keep cookies or move token persistence to a safer/cleaner approach.
-- [ ] Avoid fetching avatars directly from the UI without fallback handling; add a default avatar or graceful error state.
-- [ ] Fix date display formatting in contact cards (`getMonth()` is zero-based).
+- [x] Move API base URLs out of hardcoded `http://localhost:5001` strings and use env config or the existing proxy consistently.
+- [x] Create a small API helper/service layer so auth and contact requests are not scattered across components.
+- [x] Revisit cookie handling and decide whether to keep cookies or move token persistence to a safer/cleaner approach.
+- [x] Avoid fetching avatars directly from the UI without fallback handling; add a default avatar or graceful error state.
+- [x] Fix date display formatting in contact cards (`getMonth()` is zero-based).
 
 ## 6. Improve validation and UX polish
 - [ ] Add client-side validation for email format, password rules, and phone number format.

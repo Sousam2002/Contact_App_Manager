@@ -1,38 +1,85 @@
-/* Style for the parent container */
 .navigation-container {
-  font-size: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
-  background-color: #ffffff;
-  color: #fff;
+  padding: 16px 24px;
+  background: rgba(255, 252, 247, 0.88);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(44, 73, 89, 0.08);
 }
 
-/* Style for the logo */
+.navigation-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #173246;
+  text-decoration: none;
+}
+
+.brand-copy {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.brand-title {
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.brand-subtitle {
+  font-size: 0.8rem;
+  color: #647682;
+}
+
 .logo {
   width: 50px;
   height: 50px;
 }
 
-/* Style for the navigation links */
 .nav-links {
   display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.nav-links a {
-  color: #3a3a3a;
+.nav-link,
+.nav-button {
+  color: #355062;
   text-decoration: none;
-  margin-right: 20px;
-  transition: transform 0.3s; /* Adding transition for smooth animation */
+  padding: 10px 16px;
+  border-radius: 999px;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 700;
 }
 
-.nav-links a:hover {
-  color: #000000;
-  transform: scale(1.2); /* Scale the text slightly on hover */
+.nav-link:hover,
+.nav-button:hover {
+  color: #173246;
+  background-color: rgba(29, 92, 99, 0.08);
+  transform: translateY(-1px);
 }
 
-/* Style for active navigation link */
-.nav-links a.active {
-  font-weight: bold;
+.nav-link-active {
+  background-color: #173246;
+  color: #f9fbfc;
+  box-shadow: 0 10px 24px rgba(23, 50, 70, 0.15);
+}
+
+@media (max-width: 760px) {
+  .navigation-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+  }
 }

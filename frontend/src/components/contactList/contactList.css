@@ -1,23 +1,74 @@
 .contact-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;    
+    gap: 20px;
 }
 
 .eachcontact {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     border: 1px solid #ccc;
-    padding: 10px;
+    padding: 14px;
+    border-radius: 8px;
+    width: 400px;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.selected-contact {
+    border-color: #3c8bff;
+    box-shadow: 0 0 0 2px rgba(60, 139, 255, 0.16);
+}
+
+.contact-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.contact-actions button {
+    flex: 1;
+    border: none;
+    padding: 8px 10px;
     border-radius: 5px;
-    width: 400px; /* Adjust as needed */
+    cursor: pointer;
+}
+
+.editbutton {
+    background-color: #1d70b8;
+    color: #fff;
 }
 
 .deletebutton {
+    background-color: #c0392b;
+    color: #fff;
+}
+
+.contact-actions button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.selected-label {
     margin-top: 10px;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
+    font-size: 0.9rem;
+    color: #1d70b8;
+    font-weight: 600;
+}
+
+.contact-list-state {
+    padding: 24px;
+    border: 1px dashed #c8d4e3;
+    border-radius: 8px;
+    background-color: #f8fbff;
+    color: #29527a;
+}
+
+.empty-state h3 {
+    margin: 0 0 8px;
+}
+
+.empty-state p {
+    margin: 0;
 }

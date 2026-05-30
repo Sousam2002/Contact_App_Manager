@@ -3,7 +3,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    max-width: 400px;
+    max-width: 420px;
     margin: auto;
   }
   
@@ -33,6 +33,7 @@
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    box-sizing: border-box;
   }
   
   .add-contact-container button {
@@ -47,5 +48,33 @@
   
   .add-contact-container button:hover {
     background-color: #218838;
+  }
+
+  .add-contact-container button:disabled {
+    background-color: #91c79d;
+    cursor: not-allowed;
+  }
+
+  .contact-form-actions {
+    display: flex;
+    gap: 12px;
+  }
+
+  .contact-form-actions button {
+    flex: 1;
+  }
+
+  .secondary-button {
+    background-color: #6c757d !important;
+  }
+
+  .secondary-button:hover {
+    background-color: #5b636a !important;
+  }
+
+  .contact-form-status {
+    margin: 0 0 12px;
+    color: #1d4f91;
+    font-size: 0.95rem;
   }
   

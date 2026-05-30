@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { clearError, setError } from '../../features/userSlice';
 import AuthNotice from '../authNotice/authNotice';
+import { registerUser } from '../../services/authApi';
 import './register.css';
 
 const Register = () => {
@@ -26,10 +26,10 @@ const Register = () => {
     setFeedback({ message: '', type: 'info' });
 
     try {
-      const response = await axios.post('http://localhost:5001/api/users/register', formData);
+      const response = await registerUser(formData);
       dispatch(clearError());
       setFeedback({
-        message: `Hi ${response.data.username}, registered successfully. You can log in now.`,
+        message: `Hi ${response.username}, registered successfully. You can log in now.`,
         type: 'success'
       });
       setFormData({

@@ -1,4 +1,6 @@
 .App {
   text-align: center;
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, #f5efe2 0%, #f7fafc 42%, #eef4f6 100%);
 }
-

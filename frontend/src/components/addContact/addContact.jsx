@@ -1,46 +1,97 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { createContact } from "../../features/contactSlice";
+import {
+    clearSelectedContact,
+    createContact,
+    setContactError,
+    startSave,
+    updateContact,
+} from "../../features/contactSlice";
+import {
+    createContactRequest,
+    updateContactRequest,
+} from "../../services/contactApi";
 import "./addContact.css";
 
-const AddContact = () => {
+const AddContact = ({ activeToken, onStartAction }) => {
     const dispatch = useDispatch();
-    const token = useSelector((state) => state.user.token);
+    const { selectedContact, isSaving } = useSelector((state) => state.contacts);
     const [formData, setFormData] = useState({
         name: "",
         email: "",
         phone: ""
     });
 
+    useEffect(() => {
+        if (selectedContact) {
+            setFormData({
+                name: selectedContact.name || "",
+                email: selectedContact.email || "",
+                phone: selectedContact.phone || "",
+            });
+        } else {
+            setFormData({
+                name: "",
+                email: "",
+                phone: ""
+            });
+        }
+    }, [selectedContact]);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
+        onStartAction?.();
         setFormData({ ...formData, [name]: value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!activeToken) {
+            dispatch(setContactError("You need to be signed in to manage contacts."));
+            return;
+        }
+
+        onStartAction?.();
+        dispatch(startSave());
+
         try {
-            await axios.post("http://localhost:5001/api/contacts", formData, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            console.log("Contact added successfully");
-            dispatch(createContact(formData));
+            const response = selectedContact
+                ? await updateContactRequest(activeToken, selectedContact._id, formData)
+                : await createContactRequest(activeToken, formData);
+
+            if (selectedContact) {
+                dispatch(updateContact(response));
+                dispatch(clearSelectedContact());
+            } else {
+                dispatch(createContact(response));
+            }
+
             setFormData({
                 name: "",
                 email: "",
                 phone: ""
             });
         } catch (error) {
-            console.error("Error adding contact:", error);
+            const errorMessage =
+                error.response?.data?.message || error.response?.data?.error || "Failed to save contact.";
+            dispatch(setContactError(errorMessage));
         }
+    };
+
+    const handleCancelEdit = () => {
+        onStartAction?.();
+        dispatch(clearSelectedContact());
+        setFormData({
+            name: "",
+            email: "",
+            phone: ""
+        });
     };
 
     return (
         <div className="add-contact-container">
-            <h2>Add Contact</h2>
+            <h2>{selectedContact ? "Edit Contact" : "Add Contact"}</h2>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="name">Name:</label>
@@ -50,6 +101,7 @@ const AddContact = () => {
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
+                        disabled={isSaving}
                         required
                     />
                 </div>
@@ -61,6 +113,7 @@ const AddContact = () => {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
+                        disabled={isSaving}
                         required
                     />
                 </div>
@@ -72,10 +125,36 @@ const AddContact = () => {
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
+                        disabled={isSaving}
                         required
                     />
                 </div>
-                <button type="submit">Add Contact</button>
+                {isSaving && (
+                    <p className="contact-form-status">
+                        {selectedContact ? "Saving contact changes..." : "Creating contact..."}
+                    </p>
+                )}
+                <div className="contact-form-actions">
+                    <button type="submit" disabled={isSaving}>
+                        {isSaving
+                            ? selectedContact
+                                ? "Saving..."
+                                : "Adding..."
+                            : selectedContact
+                                ? "Save Contact"
+                                : "Add Contact"}
+                    </button>
+                    {selectedContact && (
+                        <button
+                            type="button"
+                            className="secondary-button"
+                            onClick={handleCancelEdit}
+                            disabled={isSaving}
+                        >
+                            Cancel
+                        </button>
+                    )}
+                </div>
             </form>
         </div>
     );

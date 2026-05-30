@@ -1,0 +1,67 @@
+.about-page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 48px 24px 64px;
+  text-align: left;
+}
+
+.about-card {
+  padding: 38px;
+  border-radius: 28px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(252, 246, 231, 0.98)),
+    #ffffff;
+  box-shadow: 0 18px 42px rgba(51, 67, 79, 0.1);
+  border: 1px solid #ead8bb;
+}
+
+.about-kicker {
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+  color: #8a6b39;
+}
+
+.about-card h1 {
+  margin: 0 0 16px;
+  color: #173246;
+}
+
+.about-card > p {
+  max-width: 720px;
+  margin: 0;
+  color: #4f6470;
+  line-height: 1.7;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.about-grid article {
+  padding: 20px;
+  border-radius: 18px;
+  background-color: #ffffff;
+  border: 1px solid #efe2cc;
+}
+
+.about-grid h2 {
+  margin: 0 0 10px;
+  color: #1b445a;
+}
+
+.about-grid p {
+  margin: 0;
+  color: #586d79;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+}

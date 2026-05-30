@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { clearError, setError, setUser } from '../../features/userSlice';
 import { useNavigate } from 'react-router-dom';
 import AuthNotice from '../authNotice/authNotice';
 import './login.css'; // Import the CSS file
-import { setCookie } from '../../cookiesHandler';
+import { setAuthSession } from '../../cookiesHandler';
+import { loginUser } from '../../services/authApi';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -28,18 +28,13 @@ const Login = () => {
     setFeedback({ message: '', type: 'info' });
 
     try {
-      const response = await axios.post('http://localhost:5001/api/users/login', formData);
+      const response = await loginUser(formData);
       
       // Storing user in redux state
-      dispatch(setUser(response.data));
+      dispatch(setUser(response));
       dispatch(clearError());
       
-      // Store token and user_id in cookies
-      const { token, user_id,username } = response.data;
-      const expirationTime = new Date(Date.now() + 3600000); // 1 hour expiration time
-      setCookie("token",token,expirationTime);
-      setCookie("user_id",user_id,expirationTime);
-      setCookie("username",username,expirationTime);
+      setAuthSession(response);
       navigate('/contacts');
 
     } catch (error) {
