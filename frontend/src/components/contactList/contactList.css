@@ -12,8 +12,10 @@
     padding: 14px;
     border-radius: 8px;
     width: 400px;
+    max-width: 100%;
     background-color: #fff;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    box-sizing: border-box;
 }
 
 .selected-contact {
@@ -71,4 +73,20 @@
 
 .empty-state p {
     margin: 0;
+}
+
+@media (max-width: 900px) {
+    .contact-list {
+        flex-direction: column;
+    }
+
+    .eachcontact {
+        width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    .contact-actions {
+        flex-direction: column;
+    }
 }

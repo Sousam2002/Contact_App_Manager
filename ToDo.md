@@ -40,11 +40,11 @@
 - [x] Fix date display formatting in contact cards (`getMonth()` is zero-based).
 
 ## 6. Improve validation and UX polish
-- [ ] Add client-side validation for email format, password rules, and phone number format.
-- [ ] Add duplicate contact prevention rules if the same user should not store the same contact twice.
-- [ ] Improve forms with disabled submit states during requests.
-- [ ] Review the layout and styling for mobile responsiveness and smaller screens.
-- [ ] Add confirmation UX before deleting a contact.
+- [x] Add client-side validation for email format, password rules, and phone number format.
+- [x] Add duplicate contact prevention rules if the same user should not store the same contact twice.
+- [x] Improve forms with disabled submit states during requests.
+- [x] Review the layout and styling for mobile responsiveness and smaller screens.
+- [x] Add confirmation UX before deleting a contact.
 
 ## 7. Add testing
 - [ ] Add backend tests for auth routes, token validation, and contact CRUD permissions.

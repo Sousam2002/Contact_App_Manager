@@ -32,4 +32,25 @@
     box-sizing: border-box;
     overflow-y: auto;
   }
-  
+
+  @media (max-width: 900px) {
+    .contacts-page-shell {
+      padding: 16px;
+    }
+
+    .contactpage {
+      flex-direction: column;
+      min-height: auto;
+    }
+
+    .addcontact-container {
+      border-right: none;
+      border-bottom: 1px solid #ccc;
+      padding: 0 0 20px;
+    }
+
+    .contactlist-container {
+      padding: 20px 0 0;
+      overflow-y: visible;
+    }
+  }

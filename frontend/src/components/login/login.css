@@ -1,27 +1,28 @@
 .login-container {
-    width: 300px;
+    width: 100%;
+    max-width: 340px;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #fff;
   }
   
-  /* Style for form labels */
   .login-container label {
     display: block;
     margin-bottom: 5px;
   }
   
-  /* Style for form inputs */
   .login-container input {
-    width: calc(100% - 10px);
+    width: 100%;
     padding: 8px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 3px;
+    box-sizing: border-box;
   }
   
-  /* Style for form submit button */
   .login-container button {
     width: 100%;
     padding: 10px;
@@ -32,7 +33,6 @@
     cursor: pointer;
   }
   
-  /* Style for form submit button on hover */
 .login-container button:hover {
     background-color: #0056b3;
   }
@@ -52,4 +52,15 @@
     color: #1d4f91;
     font-size: 0.95rem;
   }
-  
+
+.field-error {
+    margin: -8px 0 12px;
+    color: #9b1c1c;
+    font-size: 0.88rem;
+}
+
+@media (max-width: 640px) {
+    .login-container {
+        max-width: none;
+    }
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteContact,
@@ -7,6 +7,7 @@ import {
   startDelete,
 } from "../../features/contactSlice";
 import { deleteContactRequest } from "../../services/contactApi";
+import AlertDialogSlide from "../alert/alertDialogSlide";
 import ContactCard from "../contactCard/contactCard";
 import "./contactList.css";
 
@@ -18,6 +19,7 @@ const ContactList = ({ activeToken, onStartAction }) => {
     isFetching,
     deletingContactId,
   } = useSelector((state) => state.contacts);
+  const [contactPendingDelete, setContactPendingDelete] = useState(null);
 
   const handleDelete = async (contactId) => {
     if (!activeToken) {
@@ -43,6 +45,15 @@ const ContactList = ({ activeToken, onStartAction }) => {
     dispatch(setContact(contact));
   };
 
+  const handleDeleteRequest = (contact) => {
+    onStartAction?.();
+    setContactPendingDelete(contact);
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setContactPendingDelete(null);
+  };
+
   if (isFetching) {
     return <div className="contact-list-state">Loading contacts...</div>;
   }
@@ -57,36 +68,57 @@ const ContactList = ({ activeToken, onStartAction }) => {
   }
 
   return (
-    <div className="contact-list">
-      {contacts.map((contact) => (
-        <div key={contact._id} className={`eachcontact ${selectedContact?._id === contact._id ? "selected-contact" : ""}`}>
-          <ContactCard
-            contact={contact}
-            isSelected={selectedContact?._id === contact._id}
-          />
-          <div className="contact-actions">
-            <button
-              className="editbutton"
-              type="button"
-              onClick={() => handleSelect(contact)}
-            >
-              {selectedContact?._id === contact._id ? "Editing" : "Edit"}
-            </button>
-            <button
-              className="deletebutton"
-              type="button"
-              onClick={() => handleDelete(contact._id)}
-              disabled={deletingContactId === contact._id}
-            >
-              {deletingContactId === contact._id ? "Deleting..." : "Delete"}
-            </button>
+    <>
+      <div className="contact-list">
+        {contacts.map((contact) => (
+          <div key={contact._id} className={`eachcontact ${selectedContact?._id === contact._id ? "selected-contact" : ""}`}>
+            <ContactCard
+              contact={contact}
+              isSelected={selectedContact?._id === contact._id}
+            />
+            <div className="contact-actions">
+              <button
+                className="editbutton"
+                type="button"
+                onClick={() => handleSelect(contact)}
+              >
+                {selectedContact?._id === contact._id ? "Editing" : "Edit"}
+              </button>
+              <button
+                className="deletebutton"
+                type="button"
+                onClick={() => handleDeleteRequest(contact)}
+                disabled={deletingContactId === contact._id}
+              >
+                {deletingContactId === contact._id ? "Deleting..." : "Delete"}
+              </button>
+            </div>
+            {selectedContact?._id === contact._id && (
+              <div className="selected-label">Selected for editing</div>
+            )}
           </div>
-          {selectedContact?._id === contact._id && (
-            <div className="selected-label">Selected for editing</div>
-          )}
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+      <AlertDialogSlide
+        open={Boolean(contactPendingDelete)}
+        title="Delete contact?"
+        description={
+          contactPendingDelete
+            ? `Remove ${contactPendingDelete.name} from your saved contacts? This action cannot be undone.`
+            : ""
+        }
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        confirmColor="error"
+        onClose={handleCloseDeleteDialog}
+        onConfirm={async () => {
+          if (contactPendingDelete) {
+            await handleDelete(contactPendingDelete._id);
+          }
+          handleCloseDeleteDialog();
+        }}
+      />
+    </>
   );
 };
 

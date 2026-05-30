@@ -11,16 +11,24 @@ import {
     createContactRequest,
     updateContactRequest,
 } from "../../services/contactApi";
+import {
+    findDuplicateContact,
+    normalizeEmail,
+    normalizePhone,
+    validateEmail,
+    validatePhone,
+} from "../../utils/validation";
 import "./addContact.css";
 
 const AddContact = ({ activeToken, onStartAction }) => {
     const dispatch = useDispatch();
-    const { selectedContact, isSaving } = useSelector((state) => state.contacts);
+    const { contacts, selectedContact, isSaving } = useSelector((state) => state.contacts);
     const [formData, setFormData] = useState({
         name: "",
         email: "",
         phone: ""
     });
+    const [fieldErrors, setFieldErrors] = useState({});
 
     useEffect(() => {
         if (selectedContact) {
@@ -36,12 +44,35 @@ const AddContact = ({ activeToken, onStartAction }) => {
                 phone: ""
             });
         }
+        setFieldErrors({});
     }, [selectedContact]);
+
+    const validateForm = (values) => {
+        const errors = {};
+
+        if (!values.name.trim()) {
+            errors.name = "Name is required.";
+        }
+
+        const emailError = validateEmail(values.email);
+        if (emailError) {
+            errors.email = emailError;
+        }
+
+        const phoneError = validatePhone(values.phone);
+        if (phoneError) {
+            errors.phone = phoneError;
+        }
+
+        return errors;
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         onStartAction?.();
-        setFormData({ ...formData, [name]: value });
+        const nextFormData = { ...formData, [name]: value };
+        setFormData(nextFormData);
+        setFieldErrors(validateForm(nextFormData));
     };
 
     const handleSubmit = async (e) => {
@@ -49,6 +80,26 @@ const AddContact = ({ activeToken, onStartAction }) => {
 
         if (!activeToken) {
             dispatch(setContactError("You need to be signed in to manage contacts."));
+            return;
+        }
+
+        const errors = validateForm(formData);
+        if (Object.keys(errors).length > 0) {
+            setFieldErrors(errors);
+            dispatch(setContactError("Please fix the highlighted fields before saving this contact."));
+            return;
+        }
+
+        const duplicateContact = findDuplicateContact(contacts, formData, selectedContact?._id);
+        if (duplicateContact) {
+            const duplicateField =
+                normalizeEmail(duplicateContact.email) === normalizeEmail(formData.email)
+                    ? "email"
+                    : normalizePhone(duplicateContact.phone) === normalizePhone(formData.phone)
+                        ? "phone number"
+                        : "details";
+
+            dispatch(setContactError(`A contact with this ${duplicateField} already exists.`));
             return;
         }
 
@@ -72,6 +123,7 @@ const AddContact = ({ activeToken, onStartAction }) => {
                 email: "",
                 phone: ""
             });
+            setFieldErrors({});
         } catch (error) {
             const errorMessage =
                 error.response?.data?.message || error.response?.data?.error || "Failed to save contact.";
@@ -87,7 +139,15 @@ const AddContact = ({ activeToken, onStartAction }) => {
             email: "",
             phone: ""
         });
+        setFieldErrors({});
     };
+
+    const isSubmitDisabled =
+        isSaving ||
+        !formData.name.trim() ||
+        !formData.email.trim() ||
+        !formData.phone.trim() ||
+        Object.keys(fieldErrors).length > 0;
 
     return (
         <div className="add-contact-container">
@@ -104,6 +164,7 @@ const AddContact = ({ activeToken, onStartAction }) => {
                         disabled={isSaving}
                         required
                     />
+                    {fieldErrors.name && <p className="field-error">{fieldErrors.name}</p>}
                 </div>
                 <div>
                     <label htmlFor="email">Email:</label>
@@ -116,6 +177,7 @@ const AddContact = ({ activeToken, onStartAction }) => {
                         disabled={isSaving}
                         required
                     />
+                    {fieldErrors.email && <p className="field-error">{fieldErrors.email}</p>}
                 </div>
                 <div>
                     <label htmlFor="phone">Phone:</label>
@@ -128,6 +190,8 @@ const AddContact = ({ activeToken, onStartAction }) => {
                         disabled={isSaving}
                         required
                     />
+                    <p className="field-hint">Use 7 to 15 digits. Spaces, dashes, and a leading + are allowed.</p>
+                    {fieldErrors.phone && <p className="field-error">{fieldErrors.phone}</p>}
                 </div>
                 {isSaving && (
                     <p className="contact-form-status">
@@ -135,7 +199,7 @@ const AddContact = ({ activeToken, onStartAction }) => {
                     </p>
                 )}
                 <div className="contact-form-actions">
-                    <button type="submit" disabled={isSaving}>
+                    <button type="submit" disabled={isSubmitDisabled}>
                         {isSaving
                             ? selectedContact
                                 ? "Saving..."
