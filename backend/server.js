@@ -1,3 +1,5 @@
+const fs = require("fs");
+const path = require("path");
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
@@ -9,11 +11,27 @@ dotenv.config();
 
 const createApp = () => {
   const app = express();
+  const frontendBuildPath = path.resolve(__dirname, "../frontend/build");
+  const frontendIndexPath = path.join(frontendBuildPath, "index.html");
 
   app.use(cors());
   app.use(express.json());
   app.use("/api/contacts", require("./routes/contactRoutes"));
   app.use("/api/users", require("./routes/userRoutes"));
+
+  if (fs.existsSync(frontendBuildPath)) {
+    app.use(express.static(frontendBuildPath));
+
+    app.get("*", (req, res, next) => {
+      if (req.path.startsWith("/api/")) {
+        next();
+        return;
+      }
+
+      res.sendFile(frontendIndexPath);
+    });
+  }
+
   app.use(errorHandler);
 
   return app;

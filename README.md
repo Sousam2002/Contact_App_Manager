@@ -97,6 +97,13 @@ npm run build
 
 If you have not installed frontend dependencies yet, this command now installs them first and then runs the frontend production build.
 
+Run the single production service after building:
+
+```bash
+cd backend
+npm start
+```
+
 ## Available Scripts
 
 ### Backend
@@ -151,4 +158,8 @@ npm test -- --watchAll=false
 - The backend expects a valid MongoDB connection before it can start.
 - JWT auth is stored in browser cookies for session restore in the current implementation.
 - Contact avatar fetching is optional and falls back gracefully when no avatar API key is configured.
-- For Render, if you deploy the backend as a Web Service from the `backend` folder, `npm run build` now also prepares the frontend build. If you deploy the frontend separately as a Static Site, use the `frontend` folder’s own build command instead.
+- The backend now serves the built React app from `frontend/build` in production.
+- For Render as a single Web Service from the `backend` folder:
+  Build Command: `npm run build`
+  Start Command: `npm start`
+- If you deploy the frontend separately as a Static Site, use the `frontend` folder's own build command instead.
