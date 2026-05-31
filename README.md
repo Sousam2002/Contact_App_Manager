@@ -88,12 +88,21 @@ cd backend
 npm run dev:fullstack
 ```
 
+Create a production frontend build:
+
+```bash
+cd backend
+npm run build
+```
+
 ## Available Scripts
 
 ### Backend
 
 - `npm run dev` - start the backend with `nodemon`
 - `npm start` - start the backend with Node
+- `npm run build` - build the frontend for production
+- `npm run build:frontend` - build the frontend for production
 - `npm test` - run backend API tests
 - `npm run start:frontend` - start the frontend from inside the backend folder
 - `npm run dev:fullstack` - run backend and frontend together
