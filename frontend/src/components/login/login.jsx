@@ -83,10 +83,10 @@ const Login = () => {
       <AuthNotice message={feedback.message} type={feedback.type} />
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="login-email">Email:</label>
           <input
             type="email"
-            id="email"
+            id="login-email"
             name="email"
             value={formData.email}
             onChange={handleChange}
@@ -96,10 +96,10 @@ const Login = () => {
           {fieldErrors.email && <p className="field-error">{fieldErrors.email}</p>}
         </div>
         <div>
-          <label htmlFor="password">Password:</label>
+          <label htmlFor="login-password">Password:</label>
           <input
             type="password"
-            id="password"
+            id="login-password"
             name="password"
             value={formData.password}
             onChange={handleChange}

@@ -96,9 +96,10 @@ const Register = () => {
       <AuthNotice message={feedback.message} type={feedback.type} />
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="register-username">Username:</label>
           <input
             type="text"
+            id="register-username"
             name="username"
             value={formData.username}
             onChange={handleChange}
@@ -108,9 +109,10 @@ const Register = () => {
           {fieldErrors.username && <p className="field-error">{fieldErrors.username}</p>}
         </div>
         <div>
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="register-email">Email:</label>
           <input
             type="email"
+            id="register-email"
             name="email"
             value={formData.email}
             onChange={handleChange}
@@ -120,9 +122,10 @@ const Register = () => {
           {fieldErrors.email && <p className="field-error">{fieldErrors.email}</p>}
         </div>
         <div>
-          <label htmlFor="password">Password:</label>
+          <label htmlFor="register-password">Password:</label>
           <input
             type="password"
+            id="register-password"
             name="password"
             value={formData.password}
             onChange={handleChange}

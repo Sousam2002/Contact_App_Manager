@@ -4,11 +4,11 @@
   "description": "This is an express project for my contacts backend api",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --test",
     "start": "node server.js",
     "start:frontend": "npm start --prefix ../frontend",
-    "chalao": "concurrently \"npm run dev\" \"npm run start:frontend\"",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "dev:fullstack": "concurrently \"npm run dev\" \"npm run start:frontend\""
   },
   "author": "Souhardya Samanta",
   "license": "MIT",

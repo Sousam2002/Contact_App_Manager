@@ -21,8 +21,6 @@ export const setCookie = (name, value, options = {}) => {
 
 export const getCookie = (name) => Cookies.get(name) || null;
 
-export const checkCookie = (name) => Boolean(Cookies.get(name));
-
 export const removeCookie = (name) => {
   Cookies.remove(name);
 };

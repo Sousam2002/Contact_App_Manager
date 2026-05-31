@@ -1,19 +1,25 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const cors = require("cors");
 const errorHandler = require("./middleware/errorHandler");
 const connectDB = require("./config/dbConnection");
 const validateEnv = require("./config/validateEnv");
-var cors = require("cors");
 
 dotenv.config();
 
-const app = express();
+const createApp = () => {
+  const app = express();
 
-app.use(cors());
-app.use(express.json());
-app.use("/api/contacts", require("./routes/contactRoutes"));
-app.use("/api/users", require("./routes/userRoutes"));
-app.use(errorHandler);
+  app.use(cors());
+  app.use(express.json());
+  app.use("/api/contacts", require("./routes/contactRoutes"));
+  app.use("/api/users", require("./routes/userRoutes"));
+  app.use(errorHandler);
+
+  return app;
+};
+
+const app = createApp();
 
 const startServer = async () => {
   try {
@@ -30,10 +36,16 @@ const startServer = async () => {
       console.error("Server startup failed:", err.message);
       process.exit(1);
     });
+
+    return server;
   } catch (err) {
     console.error("Server startup failed:", err.message);
     process.exit(1);
   }
 };
 
-startServer();
+if (require.main === module) {
+  startServer();
+}
+
+module.exports = { app, createApp, startServer };

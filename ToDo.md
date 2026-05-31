@@ -47,12 +47,12 @@
 - [x] Add confirmation UX before deleting a contact.
 
 ## 7. Add testing
-- [ ] Add backend tests for auth routes, token validation, and contact CRUD permissions.
-- [ ] Add frontend tests for login, registration, protected navigation, and contact CRUD flows.
-- [ ] Add at least one integration test covering login plus contact creation and retrieval.
+- [x] Add backend tests for auth routes, token validation, and contact CRUD permissions.
+- [x] Add frontend tests for login, registration, protected navigation, and contact CRUD flows.
+- [x] Add at least one integration test covering login plus contact creation and retrieval.
 
 ## 8. Prepare for delivery
-- [ ] Write setup instructions in a root `README.md` covering install, env setup, how to run frontend/backend, and available scripts.
-- [ ] Rename unclear scripts like `chalao` to something more standard such as `dev`.
-- [ ] Add basic seed/demo instructions or sample test accounts for easier review.
-- [ ] Do a final pass on naming, code formatting, and dead code cleanup.
+- [x] Write setup instructions in a root `README.md` covering install, env setup, how to run frontend/backend, and available scripts.
+- [x] Rename unclear scripts like `chalao` to something more standard such as `dev`.
+- [x] Add basic seed/demo instructions or sample test accounts for easier review.
+- [x] Do a final pass on naming, code formatting, and dead code cleanup.
