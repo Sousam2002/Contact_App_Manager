@@ -7,7 +7,7 @@
     "test": "node --test",
     "start": "node server.js",
     "start:frontend": "npm start --prefix ../frontend",
-    "build:frontend": "npm run build --prefix ../frontend",
+    "build:frontend": "npm install --prefix ../frontend && npm run build --prefix ../frontend",
     "build": "npm run build:frontend",
     "dev": "nodemon server.js",
     "dev:fullstack": "concurrently \"npm run dev\" \"npm run start:frontend\""

@@ -95,14 +95,16 @@ cd backend
 npm run build
 ```
 
+If you have not installed frontend dependencies yet, this command now installs them first and then runs the frontend production build.
+
 ## Available Scripts
 
 ### Backend
 
 - `npm run dev` - start the backend with `nodemon`
 - `npm start` - start the backend with Node
-- `npm run build` - build the frontend for production
-- `npm run build:frontend` - build the frontend for production
+- `npm run build` - install frontend deps if needed and build the frontend for production
+- `npm run build:frontend` - install frontend deps if needed and build the frontend for production
 - `npm test` - run backend API tests
 - `npm run start:frontend` - start the frontend from inside the backend folder
 - `npm run dev:fullstack` - run backend and frontend together
@@ -149,3 +151,4 @@ npm test -- --watchAll=false
 - The backend expects a valid MongoDB connection before it can start.
 - JWT auth is stored in browser cookies for session restore in the current implementation.
 - Contact avatar fetching is optional and falls back gracefully when no avatar API key is configured.
+- For Render, if you deploy the backend as a Web Service from the `backend` folder, `npm run build` now also prepares the frontend build. If you deploy the frontend separately as a Static Site, use the `frontend` folder’s own build command instead.
